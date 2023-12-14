@@ -63,9 +63,10 @@ if __name__ == "__main__":
         else:
             add_to_playlist_list.append(song[1])
     
-    print(f"prioritized artists song total: {len(add_to_playlist_list_prioritized)}")
+    print(f"\nprioritized artists song total: {len(add_to_playlist_list_prioritized)}")
     if len(add_to_playlist_list_prioritized)!=0:
         add_new_release_to_playlist(sp, playlist_id, add_to_playlist_list_prioritized, 0)
     
     # add following song and clean data
-    add_following_songs_and_clean(sp, playlist_id, add_to_playlist_list, len(add_to_playlist_list_prioritized))
+    add_following_songs(sp, playlist_id, add_to_playlist_list, len(add_to_playlist_list_prioritized))
+    clean_duplicates(sp, playlist_id)

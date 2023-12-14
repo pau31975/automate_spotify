@@ -18,4 +18,8 @@ OAuth = SpotifyOAuth(
 
 sp = spotipy.Spotify(auth_manager=OAuth)
 print('login finished!')
-sp.album('6Pp6qGEywDdofgFC1oFbSH')['name']
+
+user_id='galaxynotetheworld'
+playlist_id='0yRBdBzOuFX6pQnF6szeeD'
+
+print(type(sp.playlist_items(playlist_id, limit=100, offset=0, additional_types=('track', 'episode'))['total']))

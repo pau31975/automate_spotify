@@ -156,10 +156,10 @@ def delete_all_in_new_release_playlist(sp, user_id, playlist_id):
         remove_list.append(track['track']['id'])
     sp.user_playlist_remove_all_occurrences_of_tracks(user_id, playlist_id, tracks=remove_list, snapshot_id=None)
 
-def add_following_songs_and_clean(sp, playlist_id, add_to_playlist_list, len_add_to_playlist_list_prioritized):
+def add_following_songs(sp, playlist_id, add_to_playlist_list, len_add_to_playlist_list_prioritized):
     
     the_rest_num=50-len_add_to_playlist_list_prioritized
-    print(f"following artists song total: {len(add_to_playlist_list)}")
+    print(f"following artists song total: {len(add_to_playlist_list)}\n")
     
     if the_rest_num > 0:
         if len(add_to_playlist_list) <= the_rest_num:
@@ -168,6 +168,8 @@ def add_following_songs_and_clean(sp, playlist_id, add_to_playlist_list, len_add
             add_new_release_to_playlist(sp, playlist_id, random.sample(add_to_playlist_list, k=the_rest_num), len_add_to_playlist_list_prioritized)
 
 
+def clean_duplicates(sp, playlist_id):
+    
     playlist_result = sp.playlist_items(playlist_id, limit=100, offset=0, additional_types=('track', 'episode'))
 
     # delete duplicates
@@ -192,3 +194,5 @@ def add_following_songs_and_clean(sp, playlist_id, add_to_playlist_list, len_add
     for i in song_to_remove:
         req = sp.track(i)
         print(f"Removing: {req['name']} - {req['artists'][0]['name']}")
+    
+    add_new_release_to_playlist(sp, playlist_id, song_to_remove, sp.playlist_items(playlist_id, limit=100, offset=0, additional_types=('track', 'episode'))['total'])
